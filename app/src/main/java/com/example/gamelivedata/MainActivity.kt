@@ -1,8 +1,10 @@
 package com.example.gamelivedata
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.lifecycle.Observer
@@ -25,11 +27,17 @@ class MainActivity : AppCompatActivity() {
         val resetButton = findViewById<Button>(R.id.button2)
         val backButton = findViewById<Button>(R.id.button3)
         val hintText = findViewById<TextView>(R.id.textView4)
+        val answerText = findViewById<EditText>(R.id.ed_answer)
+        val scoreText = findViewById<TextView>(R.id.tv_score)
 
         progressBar.max = viewModel.questionCount
 
+        viewModel.init()
+
         nextButton.setOnClickListener {
             viewModel.nextClicked()
+            viewModel.checkCorrectly(answerText.text.toString())
+            answerText.text = null
         }
 
         resetButton.setOnClickListener {
@@ -38,6 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         backButton.setOnClickListener {
             viewModel.back()
+            answerText.text = null
         }
 
         val numberObserver = Observer<Int>{
@@ -56,13 +65,20 @@ class MainActivity : AppCompatActivity() {
         val questionTextObserver = Observer<String> { question ->
             questionText.text = question
         }
+        val answerTextObserver = Observer<Int> { answer ->
+            scoreText.text = answer.toString()
+        }
         viewModel.hintLiveData.observe(this) {
             hintText.text = it
+        }
+        viewModel.ScoreAnalyzeLiveData.observe(this) {
+            scoreText.setTextColor(Color.parseColor(it))
         }
 
         viewModel.numberLiveData.observe(this, numberObserver)
         viewModel.nextEnableLiveData.observe(this, nextButtonEnableObserver)
         viewModel.backEnableLiveData.observe(this, backButtonEnableObserver)
         viewModel.questionTextLiveData.observe(this, questionTextObserver)
+        viewModel.scoreLiveData.observe(this, answerTextObserver)
     }
 }
