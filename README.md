@@ -2,7 +2,7 @@
 
 A simple project with Kotlin & Live Data.
 
-### Hi👋
+### Hi friends👋
 
 I'm **Zahra Davardoust** ☺️
 
