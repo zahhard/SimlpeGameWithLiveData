@@ -10,6 +10,7 @@ class ViewModel : ViewModel(){
     val nextEnableLiveData = MutableLiveData<Boolean>(true)
     val backEnableLiveData = MutableLiveData<Boolean>(false)
     val questionTextLiveData = MutableLiveData<String>()
+    val scoreLiveData = MutableLiveData<Int>()
 
     fun nextClicked() {
         numberLiveData.value = numberLiveData.value?.plus(1)
