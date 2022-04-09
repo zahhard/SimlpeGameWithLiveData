@@ -30,6 +30,9 @@ class MainActivity : AppCompatActivity() {
         val answerText = findViewById<EditText>(R.id.ed_answer)
         val scoreText = findViewById<TextView>(R.id.tv_score)
 
+        progressBar.getProgressDrawable().setColorFilter(
+            Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
+
         progressBar.max = viewModel.questionCount
 
         viewModel.init()
