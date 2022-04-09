@@ -34,8 +34,9 @@ class ViewModel : ViewModel(){
     }
 
     fun reset() {
-        numberLiveData.value = 0
-        nextClicked()
+        numberLiveData.value = 1
+        scoreLiveData.value = 0
+        init()
     }
 
     fun back() {
