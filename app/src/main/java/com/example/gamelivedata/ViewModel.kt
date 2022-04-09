@@ -65,9 +65,9 @@ class ViewModel : ViewModel(){
     }
 
     val ScoreAnalyzeLiveData = Transformations.map( scoreLiveData ) {
-        if (it <= questionCount / 4)
+        if (it <= questionCount / 3)
             "#f4171f"
-        else if (it > questionCount / 4 && it <= questionCount / 2)
+        else if (it > questionCount / 3 && it <= questionCount)
             "#ff7f27"
         else
             "#0ed145"
