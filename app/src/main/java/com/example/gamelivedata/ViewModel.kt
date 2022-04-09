@@ -61,7 +61,7 @@ class ViewModel : ViewModel(){
         if (it <= questionCount / 2)
             "Hurry up"
         else
-            "good"
+            "You have completed half of the questions"
     }
 
     val ScoreAnalyzeLiveData = Transformations.map( scoreLiveData ) {
