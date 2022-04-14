@@ -5,6 +5,8 @@ import androidx.room.*
 @Entity
 data class Question(
     @PrimaryKey(autoGenerate = true) val id : Int,
+    val desc: String,
+    val answer: Int
 )
 
 @Dao
