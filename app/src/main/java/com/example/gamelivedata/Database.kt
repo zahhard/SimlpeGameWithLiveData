@@ -1,4 +1,6 @@
 package com.example.gamelivedata
 
-class Database4 {
+
+
+class Database {
 }
