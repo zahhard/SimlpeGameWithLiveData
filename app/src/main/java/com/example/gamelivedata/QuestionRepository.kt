@@ -1,5 +1,7 @@
 package com.example.gamelivedata
 
+import android.content.Context
+
 object QuestionRepository {
     val questionList = arrayListOf(
         "result of : 25 + 67 ",
@@ -29,4 +31,10 @@ object QuestionRepository {
         "314",
         "882",
     )
+
+    var db : AppDatabase? = null
+    var questionDao : QuestionDao? = null
+    fun initDB(context: Context){
+        db = AppDatabase.getDatabase(context)
+    }
 }
