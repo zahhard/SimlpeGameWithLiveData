@@ -1,11 +1,13 @@
 package com.example.gamelivedata
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 
-class ViewModel : ViewModel(){
+class MainViewModel (app: Application) : AndroidViewModel(app){
 
-    val questionCount = QuestionRepository.questionList.size
+   // val questionCount = QuestionRepository.getQuestions().size
     val numberLiveData = MutableLiveData<Int>(1)
     val nextEnableLiveData = MutableLiveData<Boolean>(true)
     val backEnableLiveData = MutableLiveData<Boolean>(false)
@@ -13,24 +15,36 @@ class ViewModel : ViewModel(){
     val answerTextLiveData = MutableLiveData<String>()
     val scoreLiveData = MutableLiveData<Int>(0)
 
+    var number = MutableLiveData (0)
+    private lateinit var  questionList : List<Question>
+    var question  = MutableLiveData<Question> ()
+
+
+    init{
+        QuestionRepository.initDB(app.applicationContext)
+        questionList = QuestionRepository.getQuestions()
+        question.value = questionList[0]
+    }
+
+
     fun init(){
         numberLiveData.value?.let {
-            questionTextLiveData.value = QuestionRepository.questionList[it - 1]
+            questionTextLiveData.value = questionList[it - 1].toString()
         }
     }
 
     fun nextClicked() {
         numberLiveData.value = numberLiveData.value?.plus(1)
         numberLiveData.value?.let {
-            questionTextLiveData.value = QuestionRepository.questionList[it - 1]
-            answerTextLiveData.value = QuestionRepository.answerList[it - 2]
+            questionTextLiveData.value = questionList[it - 1].toString()
+            //answerTextLiveData.value = answerList[it - 2]
         }
         checkEnabled()
     }
 
     private fun checkEnabled() {
-        nextEnableLiveData.value = numberLiveData.value != questionCount
-        backEnableLiveData.value = numberLiveData.value != 1
+//        nextEnableLiveData.value = numberLiveData.value != questionCount
+//        backEnableLiveData.value = numberLiveData.value != 1
     }
 
     fun reset() {
@@ -42,8 +56,8 @@ class ViewModel : ViewModel(){
     fun back() {
         numberLiveData.value = numberLiveData.value?.minus(1)
         numberLiveData.value?.let {
-            questionTextLiveData.value = QuestionRepository.questionList[it-1]
-            answerTextLiveData.value = QuestionRepository.answerList[it-2]
+            questionTextLiveData.value = questionList[it-1].toString()
+         //   answerTextLiveData.value = QuestionRepository.answerList[it-2]
         }
         checkEnabled()
     }
@@ -58,19 +72,19 @@ class ViewModel : ViewModel(){
     }
 
     val hintLiveData = Transformations.map( numberLiveData ) {
-        if (it <= questionCount / 2)
-            "Hurry up"
-        else
-            "You have completed half of the questions"
+//        if (it <= questionCount / 2)
+//            "Hurry up"
+//        else
+//            "You have completed half of the questions"
     }
 
     val ScoreAnalyzeLiveData = Transformations.map( scoreLiveData ) {
-        if (it <= questionCount / 3)
-            "#f4171f"
-        else if (it > questionCount / 3 && it <= questionCount)
-            "#ff7f27"
-        else
-            "#0ed145"
+//        if (it <= questionCount / 3)
+//            "#f4171f"
+//        else if (it > questionCount / 3 && it <= questionCount)
+//            "#ff7f27"
+//        else
+//            "#0ed145"
 
     }
 }
